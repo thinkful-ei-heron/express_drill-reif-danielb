@@ -37,6 +37,55 @@ app.get('/cipher', (req, res) => {
   res.send(encrypted);
 });
 
+// #3
+app.get('/lotto', (req, res) => {
+  const numbers = req.query.arr;
+  let count = 0;
+  winningNums = Array(20)
+    .fill(1)
+    .map((x, i) => i + 1);
+
+  for (let i = winningNums.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * i);
+    const temp = winningNums[i];
+    winningNums[i] = winningNums[j];
+    winningNums[j] = temp;
+  }
+  let winningSplice = winningNums.splice(0, 6);
+
+  let doStuff = () => {
+    console.log(numbers);
+    console.log(winningSplice);
+    numbers.forEach(num => {
+      if (winningSplice.some(item => item === parseInt(num))) {
+        count += 1;
+        console.log(count);
+      }
+    });
+    return count.toString();
+  };
+
+  let didYouWin = () => {
+    doStuff();
+    switch (count) {
+      case 4:
+        return 'Congratulations, you win a free ticket';
+        break;
+      case 5:
+        return 'Congratulations! You win $100!';
+        break;
+      case 6:
+        return 'Wow! Unbelievable! You could have won the mega millions!';
+        break;
+      default:
+        return 'Sorry, you lose';
+    }
+  };
+
+  res.status(200);
+  res.send(didYouWin());
+});
+
 app.listen(9001, () => {
   console.log('listening to port 9001');
 });
