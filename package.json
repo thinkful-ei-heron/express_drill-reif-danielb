@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/thinkful-ei-heron/express_drill-reif-danielb#readme",
   "dependencies": {
+    "caesar-encrypt": "0.0.2",
+    "caesar-shift": "^1.0.0",
     "express": "^4.17.1",
     "morgan": "^1.9.1"
   },
